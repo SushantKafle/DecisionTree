@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+	<head>
+		<title>Decision Tree</title>
+		<script src="scripts/jquery.min.js"></script>
+		<script type="text/javascript" src="scripts/table.js"></script>
+		<script type="text/javascript" src="scripts/decisionTree.js"></script>
+		<script type="text/javascript" src="scripts/draw.js"></script>
+		
+		<style>
+			 #divCanvas{
+			 	width:800px;
+			 	height:500px;
+				overflow:auto;
+				border: solid 1px white;
+				background-color:white;
+			 }
+		</style>		
+		
+		<script>
+			$(document).ready(function(){
+			
+				var c=document.getElementById("myCanvas");
+				var ctx=c.getContext("2d");
+				
+				c.addEventListener("click",handleMouse,false);
+				Canvastable.set([2,2],ctx);
+				
+				$("#size").val("2X2");
+				$("#enterValues").hide();
+				$("#update").click(function()
+				{
+					var value = $("#size").val();
+					var size = value.split("X");		
+					Canvastable.set(size,ctx);
+				});
+				
+				$("#reset").click(function(){
+					Canvastable.reset();
+					$("#size").val("2X2");
+				});
+				
+				$("#start").click(function(){
+					var values = Canvastable.getValues();	
+					var cName = Canvastable.getCNames();
+					
+					
+					values = [
+					["Sunny","Hot","High","Weak","No"],
+					['Sunny','Hot','High','Strong','No'],
+					['Overcast', 'Hot','High','Weak','Yes'],
+					['Rain','Mild','High','Weak','Yes'],
+					['Rain','Cool','Normal','Weak','Yes'],
+					['Rain','Cool','Normal','Strong','No'],
+					['Overcast','Cool','Normal','Strong','Yes'],
+					['Sunny','Mild','High','Weak','No'],
+					['Sunny','Cool','Normal','Weak','Yes'],
+					['Rain','Mild','Normal','Weak','Yes'],
+					['Sunny','Mild','Normal','Strong','Yes'],
+					['Overcast','Mild','High','Strong','Yes'],
+					['Overcast','Hot','Normal','Weak','Yes'],
+					['Rain','Mild','High','Strong','No']
+					];
+					
+					cName = ["Outlook","Temperature","Humidity","Wind","Play ball"];
+					
+					
+					Canvastable.clearTable("white");	
+					data=decisionTree.calculate(values,cName);
+					drawTree.draw(data);
+				});
+				
+				$("#updateValue").click(function(){
+					if(Canvastable.isSelectionActive())
+					{
+						var value = $("#value").val();
+						Canvastable.setValue(value);
+					}
+				});
+				
+				function handleMouse(event)
+				{
+					if(Canvastable.check(event))
+					{
+						$("#enterValues").show();	
+					}else
+					{
+						$("#enterValues").hide();	
+					}
+				}
+				
+			});
+			
+		</script>
+	</head>
+	
+	<body>
+		<center>
+		<h1>Decision Tree Generator</h1>
+		<br>
+		
+		<b>Table Size:</b>
+		<input id="size" type="text" value="2X2"></input><button id="update">Apply</button>
+		<br/><br/>
+		
+		<div id="enterValues">
+		<b>Enter Value:</b>
+		<input id="value" type="text" value="0"></input><button id="updateValue">Apply</button>
+		</div>
+		<br/><br/>
+		
+		<div id="divCanvas">
+		<canvas id="myCanvas" width="800" height="5000" style="border:1px solid #000000;"></canvas>
+		</div>
+		
+		<br/>
+		
+		<button id="reset">Reset</button><button id="start">Start</button> 
+		</center>
+	</body>
+	
+</html>
