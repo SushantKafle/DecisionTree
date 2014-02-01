@@ -10,7 +10,6 @@ var decisionTree = {
 	dTree:[],
 	
 	calculate: function(_val,cName){
-		
 		this.values = _val;
 		this.splitIndex = -1;
 		this.cName = cName;
@@ -27,9 +26,14 @@ var decisionTree = {
 			type = val[3];
 			check = this.pureVal(value);
 			
+			
+			
 			if(check[0])
 			{
-				decisionTreeData.push(['t',type,id_count,from,check[1]]);
+				if(id_count != 0)
+					decisionTreeData.push(['t',type,id_count,from,check[1]]);
+				else
+					decisionTreeData.push(['t',_val[1][0],id_count,from,check[1]]);
 				continue;
 			}
 			
