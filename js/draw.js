@@ -9,7 +9,7 @@ var drawTree =
 	
 	draw: function(data)
 	{
-	context = document.getElementById("myCanvas").getContext("2d");
+		context = document.getElementById("myCanvas").getContext("2d");
 		this.data = data;
 		fromId = 0;
 		
@@ -20,16 +20,34 @@ var drawTree =
 		
 		drawY = 200;
 		
-		context.fillStyle="#FFAFA0";
-		context.fillRect((400-this.width/2),(drawY-this.height-this.spaceY),this.width,this.height);
+		if(rootNode[0][0] == 'n')
+		{
 		
-		context.fillStyle="#000";
-		context.fillText(rootNode[0][1],(400-this.width/2),(drawY-this.height-this.spaceY)+15);
+			context.fillStyle="#FFAFA0";
+			context.fillRect((400-this.width/2),(drawY-this.height-this.spaceY),this.width,this.height);
+		
+			context.fillStyle="#000";
+			context.fillText(rootNode[0][1],(400-this.width/2),(drawY-this.height-this.spaceY)+15);
+		}else
+		{
+			context.fillStyle="#00A0AF";
+			context.fillRect((400-this.width/2),(drawY-this.height-this.spaceY),this.width,this.height);
+			
+			//Fill Text
+			context.fillStyle="#000";
+			context.fillText(rootNode[0][1],(400-this.width/2),(drawY-this.height-this.spaceY)+15);
+			
+			context.fillStyle="#AA9090";
+			context.moveTo((400-this.width/2)+(this.width/2),((drawY-this.height-this.spaceY)+this.height));
+			context.lineTo((400-this.width/2)+(this.width/2),((drawY-this.height-this.spaceY)+this.height)+50);
+			context.stroke();
+			
+			//fill Label
+			context.fillStyle="#000";
+			context.fillText(rootNode[0][4],(400-this.width/2)+(this.width/2)-7,((drawY-this.height-this.spaceY)+this.height)+60);
+		}
 		
 		canvasWidth = $("#myCanvas").attr("width");
-		
-		
-		//drawRoot
 		
 		drawableList = [rootNode];
 		
