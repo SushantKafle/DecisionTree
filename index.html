@@ -79,8 +79,6 @@
 					
 					Canvastable.clearTable("white");	
 					data=decisionTree.calculate(values,cName);
-					var c=document.getElementById("myCanvas");
-					drawTree.clear(c);
 					drawTree.draw(data);
 				});
 				
@@ -88,16 +86,11 @@
 					
 					var c=document.getElementById("myCanvas");
 					var ctx=c.getContext("2d");
-					
-					//ctx.fillStyle = "white";
-					//ctx.fillRect(0,0,$("#myCanvas").width(),$("#myCanvas").height());
-					
 					var values = Canvastable.getValues();
 					var cName = Canvastable.getCNames();
 					
 					Canvastable.clearTable("white");	
 					data=decisionTree.calculate(values,cName);
-					drawTree.clear(c);
 					drawTree.draw(data);
 				});
 				
