@@ -179,26 +179,27 @@ var Canvastable = {
 	
 	},
 	
+	getXY: function(event){
+		canvas = document.getElementById("myCanvas");
+		if(event.offsetX) {
+			x = event.offsetX;
+			y = event.offsetY;
+		}
+		else if(event.layerX) {
+			x = event.layerX;
+			y = event.layerY;
+		}
+		return [x,y];
+	},
+	
 	check: function(event)
 	{
 		var canvas = document.getElementById("myCanvas");
 		
-		if (event.x != undefined && event.y != undefined)
-        {
-          x = event.x;
-          y = event.y;
-        }
-        else
-        {
-          x = event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-          y = event.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-        }
-
-        x -= canvas.offsetLeft;
-        y -= canvas.offsetTop;
+		xy = this.getXY(event);
+		x=xy[0];
+		y=xy[1];
 		
-		x += document.getElementById('divCanvas').scrollLeft;
-		y += document.getElementById('divCanvas').scrollTop;
 		
 		
 		if( x > this.shiftX && x < (this.shiftX+this.nCols*this.cellWidth)
