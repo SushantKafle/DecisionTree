@@ -64,8 +64,10 @@ var drawTree =
 					context.fillText(nodes[i][1],startX,drawY+15);
 					
 					context.fillStyle="#AA9090";
+					context.beginPath();
 					context.moveTo(startX+(this.width/2),(drawY+this.height));
 					context.lineTo(startX+(this.width/2),(drawY+this.height)+50);
+					context.closePath();
 					context.stroke();
 					
 					//fill Label
@@ -104,9 +106,10 @@ var drawTree =
 		pY = drawY - (this.height + this.spaceY);
 		
 		c.fillStyle="#000";
-		
+		c.beginPath();
 		c.moveTo(pX,pY+this.height);
 		c.lineTo(x+(this.width/2),y);
+		c.closePath();
 		c.stroke();
 		
 	},
