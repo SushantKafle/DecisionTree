@@ -22,7 +22,11 @@ var decisionTree = {
 		{
 			val = Dval.pop();
 			value = val[1];
-			[id,from] = val[0]; 
+			
+			//For Chrome:Update
+			//[id,from] = val;
+			id = val[0][0]; 
+			from = val[0][1];
 			names = val[2];
 			type = val[3];
 			check = this.pureVal(value);
@@ -33,7 +37,14 @@ var decisionTree = {
 				continue;
 			}
 			
-			[classValues,classTypes,nClass] = this.getInfo(value,value[0].length-1);
+			//For Chrome:Update
+			//[classValues,classTypes,nClass] = this.getInfo(value,value[0].length-1);
+			cVals = this.getInfo(value,value[0].length-1);
+			classValues = cVals[0];
+			classTypes = cVals[1];
+			nClass = cVals[2];
+			
+			
 			EntropyS = this.calcEntropyS(classValues,classTypes,nClass);
 			
 			if(value.length == 1)
@@ -59,7 +70,13 @@ var decisionTree = {
 			
 			this.splitIndex = _indexList;
 			decisionTreeData.push(['n',names[_indexList],id,from]);
-			[_tval,_cName,ct]=this.filter(value,names,this.splitIndex);
+
+			//For chrome
+			//[_tval,_cName,ct]=this.filter(value,names,this.splitIndex);
+			fresult = this.filter(value,names,this.splitIndex);
+			_tval=fresult[0];
+			_cName=fresult[1];
+			ct=fresult[2];
 			
 			for(p=0;p<_tval.length;p++)
 			{
@@ -88,8 +105,12 @@ var decisionTree = {
 		if(index == -1)
 			return [[val],[name]];
 			
-			
-		[cv,ct,n] = this.getInfo(val,index);
+		//For Chrome
+		//[cv,ct,n] = this.getInfo(val,index);
+		gInfo = this.getInfo(val,index);
+		cv=gInfo[0];
+		ct=gInfo[1];
+		n=gInfo[2];
 		
 		_val = [];
 		_name = [];
@@ -142,7 +163,12 @@ var decisionTree = {
 	
 	calcEntropy: function(arr,nClass,classValues,classTypes)
 	{
-		[_values,_types,_count] = arr;
+		
+		//For Chrome
+		//[_values,_types,_count] = arr;
+		_values = arr[0];
+		_types = arr[1];
+		_count = arr[2];
 		
 		result = 0;
 		
@@ -189,7 +215,7 @@ var decisionTree = {
 				if(_prob == 0)
 					entropy += _prob;
 				else		
-					entropy += (_prob * Math.log2(_prob))
+					entropy += (_prob * Math.log(_prob))
 			}
 			
 			result += ((_val.length/_values.length)*entropy);
@@ -228,7 +254,7 @@ var decisionTree = {
 		{
 			_prob[i] = count[i] / total;
 			
-			result += (_prob[i] * Math.log2(_prob[i]))
+			result += (_prob[i] * Math.log(_prob[i]))
 		}
 	
 		return -1*result;
